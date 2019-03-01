@@ -63,6 +63,7 @@ typedef struct batteryConfig_s {
     uint8_t forceBatteryCellCount;          // Number of cells in battery, used for overwriting auto-detected cell count if someone has issues with it.
     uint8_t vbatLpfPeriod;                  // Period of the cutoff frequency for the Vbat filter (in 0.1 s)
     uint8_t ibatLpfPeriod;                  // Period of the cutoff frequency for the Ibat filter (in 0.1 s)
+    bool useVBatFilter;                     // ON battery voltage filered OFF latest
 } batteryConfig_t;
 
 PG_DECLARE(batteryConfig_t, batteryConfig);

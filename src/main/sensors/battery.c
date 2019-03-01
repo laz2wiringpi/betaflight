@@ -108,6 +108,7 @@ PG_RESET_TEMPLATE(batteryConfig_t, batteryConfig,
 
     // warnings / alerts
     .useVBatAlerts = true,
+    .useVBatFilter = true,
     .useConsumptionAlerts = false,
     .consumptionWarningPercentage = 10,
     .vbathysteresis = 1,
