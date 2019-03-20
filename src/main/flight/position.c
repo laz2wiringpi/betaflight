@@ -130,7 +130,7 @@ if (sensors(SENSOR_GPS) && STATE(GPS_FIX)) {
     gpsAlt -= gpsAltOffset;
     
     if (haveGpsAlt && haveBaroAlt) {
-        estimatedAltitudeCm = gpsAlt * gpsTrust + baroAlt * (1 - gpsTrust);
+        estimatedAltitudeCm = baroAlt; // use baro! gpsAlt * gpsTrust + baroAlt * (1 - gpsTrust);
 #ifdef USE_VARIO
         // baro is a better source for vario, so ignore gpsVertSpeed
         estimatedVario = calculateEstimatedVario(baroAlt, dTime);
