@@ -85,4 +85,7 @@ const char * const debugModeNames[DEBUG_COUNT] = {
     "D_MIN",
     "AC_CORRECTION",
     "AC_ERROR",
+    "CRSF_LINK_STATISTICS_UPLINK",
+    "CRSF_LINK_STATISTICS_PWR",
+    "CRSF_LINK_STATISTICS_DOWN",
 };
