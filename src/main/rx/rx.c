@@ -73,7 +73,7 @@ const char rcChannelLetters[] = "AERT12345678abcdefgh";
 static uint16_t rssi = 0;                  // range: [0;1023]
 static timeUs_t lastMspRssiUpdateUs = 0;
 #ifdef USE_RX_LINK_QUALITY_INFO
-static uint8_t linkQuality = 0;
+static uint16_t linkQuality = 0;
 #endif
 
 #define MSP_RSSI_TIMEOUT_US 1500000   // 1.5 sec
@@ -82,6 +82,7 @@ static uint8_t linkQuality = 0;
 #define RSSI_OFFSET_SCALING (1024 / 100.0f)
 
 rssiSource_e rssiSource;
+linkQualitySource_e linkQualitySource;
 
 static bool rxDataProcessingRequired = false;
 static bool auxiliaryProcessingRequired = false;
@@ -350,11 +351,11 @@ void resumeRxPwmPpmSignal(void)
 #ifdef USE_RX_LINK_QUALITY_INFO
 #define LINK_QUALITY_SAMPLE_COUNT 16
 
-static uint8_t updateLinkQualitySamples(uint8_t value)
+STATIC_UNIT_TESTED uint16_t updateLinkQualitySamples(uint16_t value)
 {
-    static uint8_t samples[LINK_QUALITY_SAMPLE_COUNT];
+    static uint16_t samples[LINK_QUALITY_SAMPLE_COUNT];
     static uint8_t sampleIndex = 0;
-    static unsigned sum = 0;
+    static uint16_t sum = 0;
 
     sum += value - samples[sampleIndex];
     samples[sampleIndex] = value;
@@ -366,13 +367,24 @@ static uint8_t updateLinkQualitySamples(uint8_t value)
 static void setLinkQuality(bool validFrame)
 {
 #ifdef USE_RX_LINK_QUALITY_INFO
-    // calculate new sample mean
-    linkQuality = updateLinkQualitySamples(validFrame ? LINK_QUALITY_MAX_VALUE : 0);
+    if (linkQualitySource != LQ_SOURCE_RX_PROTOCOL_CRSF) {
+        // calculate new sample mean
+        linkQuality = updateLinkQualitySamples(validFrame ? LINK_QUALITY_MAX_VALUE : 0);
+    }
 #endif
 
     if (rssiSource == RSSI_SOURCE_FRAME_ERRORS) {
         setRssi(validFrame ? RSSI_MAX_VALUE : 0, RSSI_SOURCE_FRAME_ERRORS);
     }
+}
+
+void setLinkQualityDirect(uint16_t linkqualityValue)
+{
+#ifdef USE_RX_LINK_QUALITY_INFO
+    linkQuality = linkqualityValue;
+#else
+    UNUSED(linkqualityValue);
+#endif
 }
 
 bool rxUpdateCheck(timeUs_t currentTimeUs, timeDelta_t currentDeltaTime)
@@ -722,14 +734,14 @@ uint8_t getRssiPercent(void)
 }
 
 #ifdef USE_RX_LINK_QUALITY_INFO
-uint8_t rxGetLinkQuality(void)
+uint16_t rxGetLinkQuality(void)
 {
     return linkQuality;
 }
 
-uint8_t rxGetLinkQualityPercent(void)
+uint16_t rxGetLinkQualityPercent(void)
 {
-    return scaleRange(rxGetLinkQuality(), 0, LINK_QUALITY_MAX_VALUE, 0, 100);
+    return (linkQualitySource == LQ_SOURCE_RX_PROTOCOL_CRSF) ?  (linkQuality / 3.41) : scaleRange(linkQuality, 0, LINK_QUALITY_MAX_VALUE, 0, 100);
 }
 #endif
 
