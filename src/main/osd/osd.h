@@ -126,6 +126,7 @@ typedef enum {
     OSD_STICK_OVERLAY_RIGHT,
     OSD_DISPLAY_NAME,
     OSD_ESC_RPM_FREQ,
+    OSD_RSSI_DBM_VALUE,
     OSD_ITEM_COUNT // MUST BE LAST
 } osd_items_e;
 
@@ -159,6 +160,8 @@ typedef enum {
     OSD_STAT_MIN_LINK_QUALITY,
     OSD_STAT_FLIGHT_DISTANCE,
     OSD_STAT_MAX_FFT,
+    OSD_STAT_MIN_RSSI_DBM,
+>>>>>>> c1510c9f2... USE_RX_RSSI_DBM Split from pr 8042
     OSD_STAT_COUNT // MUST BE LAST
 } osd_stats_e;
 
@@ -203,8 +206,10 @@ typedef enum {
     OSD_WARNING_LAUNCH_CONTROL,
     OSD_WARNING_GPS_RESCUE_UNAVAILABLE,
     OSD_WARNING_GPS_RESCUE_DISABLED,
-	OSD_WARNING_RSSI,
-	OSD_WARNING_LINK_QUALITY,
+    OSD_WARNING_RSSI,
+    OSD_WARNING_LINK_QUALITY,
+    OSD_WARNING_RSSI_DBM,
+>>>>>>> c1510c9f2... USE_RX_RSSI_DBM Split from pr 8042
     OSD_WARNING_COUNT // MUST BE LAST
 } osdWarningsFlags_e;
 
@@ -243,6 +248,7 @@ typedef struct osdConfig_s {
     uint8_t osdProfileIndex;
     uint8_t overlay_radio_mode;
     uint16_t link_quality_alarm;
+    uint8_t rssi_dbm_alarm;
 } osdConfig_t;
 
 PG_DECLARE(osdConfig_t, osdConfig);
@@ -259,6 +265,7 @@ typedef struct statistic_s {
     int16_t max_esc_temp;
     int32_t max_esc_rpm;
     uint16_t min_link_quality;
+    uint8_t min_rssi_dbm;
 } statistic_t;
 
 extern timeUs_t resumeRefreshAt;

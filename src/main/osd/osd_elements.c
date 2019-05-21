@@ -961,6 +961,13 @@ static void osdElementRtcTime(osdElementParms_t *element)
 }
 #endif // USE_RTC_TIME
 
+#ifdef USE_RX_RSSI_DBM
+static void osdElementRssiDbm(osdElementParms_t *element)
+{
+    tfp_sprintf(element->buff, "%c%3d", SYM_RSSI, getRssiDbm() * -1  );
+}
+#endif // USE_RX_RSSI_DBM
+
 #ifdef USE_OSD_STICK_OVERLAY
 static void osdElementStickOverlay(osdElementParms_t *element)
 {
@@ -1128,6 +1135,14 @@ static void osdElementWarnings(osdElementParms_t *element)
         SET_BLINK(OSD_WARNINGS);
         return;
     }
+#ifdef USE_RX_RSSI_DBM
+    // rssi dbm
+    if (osdWarnGetState(OSD_WARNING_RSSI_DBM) && (getRssiDbm() > osdConfig()->rssi_dbm_alarm)) {
+        osdFormatMessage(element->buff, OSD_FORMAT_MESSAGE_BUFFER_SIZE, "RSSI DBM");
+        SET_BLINK(OSD_WARNINGS);
+        return;
+    }
+#endif // USE_RX_RSSI_DBM
 
 #ifdef USE_RX_LINK_QUALITY_INFO
     // Link Quality
@@ -1331,6 +1346,9 @@ static const uint8_t osdElementDisplayOrder[] = {
 #ifdef USE_RX_LINK_QUALITY_INFO
     OSD_LINK_QUALITY,
 #endif
+#ifdef USE_RX_RSSI_DBM
+    OSD_RSSI_DBM_VALUE,
+#endif
 #ifdef USE_OSD_STICK_OVERLAY
     OSD_STICK_OVERLAY_LEFT,
     OSD_STICK_OVERLAY_RIGHT,
@@ -1430,6 +1448,10 @@ const osdElementDrawFn osdElementDrawFunction[OSD_ITEM_COUNT] = {
 #if defined(USE_RPM_FILTER) || defined(USE_ESC_SENSOR)
     [OSD_ESC_RPM_FREQ]            = osdElementEscRpmFreq,
 #endif
+#ifdef USE_RX_RSSI_DBM
+    [OSD_RSSI_DBM_VALUE]          = osdElementRssiDbm,
+#endif
+
 };
 
 static void osdAddActiveElement(osd_items_e element)
