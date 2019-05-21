@@ -71,7 +71,7 @@
 const char rcChannelLetters[] = "AERT12345678abcdefgh";
 
 static uint16_t rssi = 0;                  // range: [0;1023]
-static uint8_t rssi_dbm = 130;               // range: [0;130]
+static uint8_t rssi_dbm = 130;             // range: [0;130] display 0 to -130
 static timeUs_t lastMspRssiUpdateUs = 0;
 #ifdef USE_RX_LINK_QUALITY_INFO
 static uint16_t linkQuality = 0;
@@ -764,7 +764,7 @@ void setRssiDbm(uint8_t rssiDbmValue, rssiSource_e source)
 
 void setRssiDbmDirect(uint8_t newRssiDbm, rssiSource_e source)
 {
-    if (source != rssiSource) { // maybe the setting ?
+    if (source != rssiSource) {
         return;
     }
 

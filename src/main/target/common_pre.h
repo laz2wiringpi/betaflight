@@ -184,7 +184,6 @@
 #define USE_MSP_DISPLAYPORT
 #define USE_MSP_OVER_TELEMETRY
 #define USE_LED_STRIP
-#define USE_RX_RSSI_DBM
 #endif
 
 #if ((FLASH_SIZE > 256) || (FEATURE_CUT_LEVEL < 11))
@@ -262,6 +261,7 @@
 #define USE_ESC_SENSOR_INFO
 #define USE_CRSF_CMS_TELEMETRY
 #define USE_CRSF_LINK_STATISTICS
+#define USE_RX_RSSI_DBM
 #endif
 
 #endif // FLASH_SIZE > 128
