@@ -1,0 +1,242 @@
+commit a243cb3a06372d772e020936276e9e808b0ce030
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon May 20 12:20:34 2019 -0400
+
+    Add CMS menu entry level control of forced reboot on changes
+    CMS menu items can now be defined with a `REBOOT_REQUIRED` flag. If the user changes flagged elements the the exit/save options will change to `EXIT&REBOOT` and `SAVE&REBOOT` - ensuring that the changed items will be handled properly. This should be used for options where runtime changes either won't take effect (because they are read at boot), or for items that could have unexpected behavior if changed.
+    
+    Several appropriate menus have been updated to include the flag.
+    
+    To accomodate the dynamic nature of the save/exit options, the individual options have been removed from the main menu and replaced with a `SAVE/EXIT` submenu. This is the same menu that is presented as the quick-access popup save menu (yaw-right). This menu will adapt to requiring a reboot if any flagged setting is changed. Additionally the `REBOOT_REQD` arming disabled reason will be set (cleared by the reboot).
+
+commit e6c8b881585ec1edcb5de7c1e2f0235f38e79836
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Wed May 22 21:07:13 2019 -0400
+
+    fix bad cherry_pick dbm
+
+commit 02eaec5575c109140ac32fd188dd210f91fc8876
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Wed May 22 21:04:10 2019 -0400
+
+    Revert "add missing haveGpsAlt and haveBaroAlt checks"
+    
+    This reverts commit aa990eb0f18db67846650b83bc8783dbbd7af522.
+
+commit 6c60205f71443af4f041cbe9e7c86f25fe830145
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Tue May 21 16:40:21 2019 -0400
+
+    add missing code
+    cleanup space(s)
+    comment
+    move define define in post  add to pre
+
+commit de04aa0cb91e50fddaddcf47d4cf7322269fab1b
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Mon May 20 22:19:04 2019 -0400
+
+    USE_RX_RSSI_DBM Split from pr 8042
+    rssi dbm osd negitive values
+    rename max to min
+
+commit e48d735732ba31a88595700f5714419ed8f8b8ed
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Thu May 9 22:09:35 2019 -0400
+
+    Link Quality without Aux
+    
+    fix indent , move unused
+    remove premature optimisation
+    Use prior code for osd element calc
+    unit test add crsf for scaleCrsfLq
+    unittest typo
+    rx 0-100
+    elements simplify osdElementLinkQuality refactor
+    share  one 16 bit var
+
+commit c4229cbb07498c206bcb3c0994050a3ef97fdcb4
+Author: Nicola De Pasquale <ndp7c7c0@gmail.com>
+Date:   Mon May 6 14:44:36 2019 +0200
+
+    add gps rescue landing altitude and distance to CMS
+
+commit 08f318e63a22e9fb6c732b66cd18cfd1524e909d
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Sun May 5 00:21:27 2019 -0400
+
+    fix over write other rssiSource not RSSI_SOURCE_RX_PROTOCOL_CRSF
+    space
+    rename CRSF_LINK_STATUS_UPDATE_TIMEOUT_US
+    move define
+
+commit 59a9922ab716d79c1f0fb70ef704bb09acd9a64f
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Sat May 4 22:02:25 2019 -0400
+
+    USE_CRSF_LINK_STATISTICS Split from pr 8042
+
+commit 74c61373cf577a3ccbd01e7947fe34cad149fdb8
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Thu May 2 09:51:32 2019 -0400
+
+    code style issues
+
+commit aa990eb0f18db67846650b83bc8783dbbd7af522
+Author: Maciej Bunia <maciej.bunia@loyaltypoint.pl>
+Date:   Tue Apr 30 13:07:45 2019 +0200
+
+    add missing haveGpsAlt and haveBaroAlt checks
+    
+    simplify conditions
+
+commit 19c596a44706d4558bdffe9bc9a0f5f48e69a23c
+Author: Michael Keller <github@ike.ch>
+Date:   Tue Apr 30 08:24:59 2019 +1200
+
+    When GPS Rescue is engaged after a Failsafe, pilot has to manually sw… (#7936)
+    
+    When GPS Rescue is engaged after a Failsafe, pilot has to manually sw…
+
+commit 3e30afba4efe4cae568d37d62e3a2a52b855c3d4
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Tue Feb 26 23:13:03 2019 -0500
+
+    from the pr
+    delay for voltage warnings #6691
+    
+    changed to vbat
+    Update Battery.md
+    Add Menu osd Alarm delay
+    
+    vbat_duration_for_crit
+    batteryConfig_vbatDurationForCrit
+    to
+     vbat_duration_for_critical
+    batteryConfig_vbatDurationForCritical
+    
+    lastVoltageOkMillis rename
+
+commit 86a18070e80229d487a8581aec18ecee925267c8
+Author: Tony Cabello <tcabello@blitworks.com>
+Date:   Tue Apr 16 04:27:23 2019 +0200
+
+    Simplified logic for recovery delay
+
+commit 36174624ea379909631f3eb5f3947306ea60a9b7
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon Apr 15 19:27:31 2019 -0400
+
+    Maximize OSD stats display lines based on video mode
+    Will dynamically determine the number of active OSD stats lines that are being displayed (accounting for user selections and #define logic) and maximize the number of stats that can be displayed based on the current video format (13 for NTSC, 16 for PAL).
+    
+    If the number of stats is equal to or greater than the available display lines, the heading will be suppressed and used instead for an extra stats line.
+    
+    The entire stats page will be centered vertically based on the screen size determined by the video format.
+
+commit 110263fb568558ef45c6bf94c0cef1df2b7cd046
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Tue Feb 26 23:13:03 2019 -0500
+
+    from the pr
+    delay for voltage warnings #6691
+    
+    changed to vbat
+    Update Battery.md
+    Add Menu osd Alarm delay
+    
+    vbat_duration_for_crit
+    batteryConfig_vbatDurationForCrit
+    to
+     vbat_duration_for_critical
+    batteryConfig_vbatDurationForCritical
+    
+    lastVoltageOkMillis rename
+
+commit a05a5eace2579536300796b7f69e2a55e9c25b8b
+Author: laz2wiringpi <laz2wiringpi@users.noreply.github.com>
+Date:   Sat Mar 23 13:13:02 2019 -0400
+
+    GPS Rescue cms menu
+
+commit fa3a73a9c0fb59dfa10dd6e0c14283e9944d9e78
+Author: ianrmurphy <ian.murphy@yahoo.co.uk>
+Date:   Mon Apr 15 12:33:47 2019 +0100
+
+    Corrected parameter ordering, no MSP.
+
+commit 1c30a19917d730f37458a56c8520f55265ee498f
+Author: ianrmurphy <ian.murphy@yahoo.co.uk>
+Date:   Sun Apr 14 23:00:01 2019 +0100
+
+    Added warnings for RSSI and Link Quality, added Link Quality alarm.
+
+commit 288fdf0da9b3c1e7e1dbb74b28d5bddd8f14736e
+Author: Tony Cabello <tcabello@blitworks.com>
+Date:   Sun Apr 14 19:07:05 2019 +0200
+
+    Added a missing USE_GPS_RESCUE
+
+commit 395e709513ccc0bd44f22e86f47b3cac9b1775b6
+Author: Tony Cabello <tcabello@blitworks.com>
+Date:   Sun Apr 14 18:17:22 2019 +0200
+
+    Replaced !FS! fly mode with *FS* due to missing exclamation mark in OSD font
+
+commit 45b85ac7c85454115f860c8171e080631ae4df97
+Author: jirif <jiri.fojtasek@gmail.com>
+Date:   Sun Apr 14 15:41:44 2019 +0200
+
+    Show only 3 significant digits in vbat OSD element
+
+commit dc693291b365ad9c6147acad2b4795ab67195537
+Author: Tony Cabello <tcabello@blitworks.com>
+Date:   Sun Apr 14 14:11:21 2019 +0200
+
+    USE_GPS_RESCUE condition is now used in failsafe.c
+
+commit 305aa32c7b205bcd1e081cc8c45e0a2a93a4c571
+Author: Tony Cabello <tcabello@blitworks.com>
+Date:   Tue Apr 9 06:30:35 2019 +0200
+
+    GPS Rescue procedure can be aborted by moving sticks, with a configurable delay after recovering rx
+
+commit dd991444f4dbbfcef63ad1cfb1a22e8b5c5c9e15
+Author: Nicola De Pasquale <ndp7c7c0@gmail.com>
+Date:   Tue Mar 19 19:52:13 2019 +0100
+
+    improve landing altitude
+    
+    fix some comments
+    
+    some requested fixes
+    
+    initialLandingAltitude converted in meters
+    
+    removed landing altitude setting from msp, added missing comma
+    
+    re-added gps_rescue_landing_alt in settings.c
+    
+    made target landing distance configurable, renamed descentDistance
+    
+    added slow down distance and improved return speed
+    
+    changed newSpeed formula
+    
+    moved newSpeed variable in gps rescue inizialization phase
+    
+    newSpeed declared as int32_t
+    
+    modified slow down distance to constant
+    
+    added some comments
+    
+    fix type-casting bug
+    
+    removed extra space
+    
+    changed slow down distance for better landing
+    
+    changed default targetLandingAltitudeM to 5 meters
+
+
