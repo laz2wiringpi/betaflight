@@ -161,7 +161,6 @@ typedef enum {
     OSD_STAT_FLIGHT_DISTANCE,
     OSD_STAT_MAX_FFT,
     OSD_STAT_MIN_RSSI_DBM,
->>>>>>> c1510c9f2... USE_RX_RSSI_DBM Split from pr 8042
     OSD_STAT_COUNT // MUST BE LAST
 } osd_stats_e;
 
@@ -209,7 +208,6 @@ typedef enum {
     OSD_WARNING_RSSI,
     OSD_WARNING_LINK_QUALITY,
     OSD_WARNING_RSSI_DBM,
->>>>>>> c1510c9f2... USE_RX_RSSI_DBM Split from pr 8042
     OSD_WARNING_COUNT // MUST BE LAST
 } osdWarningsFlags_e;
 
